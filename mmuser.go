@@ -23,8 +23,11 @@ func NewUserMM(c net.Conn, srv Server, cfg *MmCfg) *User {
 	u.Srv = srv
 	u.MmInfo.Cfg = cfg
 
+	if cfg.LoginServiceNick == nil {
+		cfg.LoginServiceNick = "mattermost"
+	}
 	// used for login
-	mattermostService := &User{Nick: "mattermost", User: "mattermost", Real: "loginservice", Host: "service", channels: map[Channel]struct{}{}}
+	mattermostService := &User{Nick: cfg.LoginServiceNick, User: "mattermost", Real: "loginservice", Host: "service", channels: map[Channel]struct{}{}}
 	mattermostService.MmGhostUser = true
 	srv.Add(mattermostService)
 	if _, ok := srv.HasUser("mattermost"); !ok {
@@ -223,9 +226,10 @@ type MmCredentials struct {
 }
 
 type MmCfg struct {
-	AllowedServers []string
-	DefaultServer  string
-	DefaultTeam    string
+	AllowedServers   []string
+	DefaultServer    string
+	DefaultTeam      string
+	LoginServiceNick string
 }
 
 func (u *User) WsReceiver() {
