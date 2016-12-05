@@ -105,7 +105,7 @@ func CmdList(s Server, u *User, msg *irc.Message) error {
 			Prefix:   s.Prefix(),
 			Command:  irc.RPL_LIST,
 			Params:   []string{u.Nick,channelName,"0",strings.Replace(channel.Header, "\n", " | ", -1)},
-			Trailing: nil,
+			Trailing: "",
 		})
 	}
 	r = append(r, &irc.Message{
