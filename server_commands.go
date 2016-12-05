@@ -410,7 +410,7 @@ func CmdWhois(s Server, u *User, msg *irc.Message) error {
 
 		r = append(r, &irc.Message{
 			Prefix:   s.Prefix(),
-			Params:   []string{u.Nick},
+			Params:   []string{u.Nick, other.Nick},
 			Command:  irc.RPL_ENDOFWHOIS,
 			Trailing: "End of /WHOIS list.",
 		})
