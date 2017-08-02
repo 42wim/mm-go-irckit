@@ -32,6 +32,7 @@ type MmCfg struct {
 	DefaultServer  string
 	DefaultTeam    string
 	Insecure       bool
+	SkipTLSVerify  bool
 }
 
 func NewUserMM(c net.Conn, srv Server, cfg *MmCfg) *User {
@@ -52,6 +53,9 @@ func (u *User) loginToMattermost() (*matterclient.MMClient, error) {
 	mc := matterclient.New(u.Credentials.Login, u.Credentials.Pass, u.Credentials.Team, u.Credentials.Server)
 	if u.Cfg.Insecure {
 		mc.Credentials.NoTLS = true
+	}
+	if !u.Cfg.SkipTLSVerify {
+		mc.Credentials.SkipTLSVerify = true
 	}
 	mc.SetLogLevel(LogLevel)
 	logger.Infof("login as %s (team: %s) on %s", u.Credentials.Login, u.Credentials.Team, u.Credentials.Server)
