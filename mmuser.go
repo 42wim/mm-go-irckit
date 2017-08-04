@@ -54,9 +54,8 @@ func (u *User) loginToMattermost() (*matterclient.MMClient, error) {
 	if u.Cfg.Insecure {
 		mc.Credentials.NoTLS = true
 	}
-	if !u.Cfg.SkipTLSVerify {
-		mc.Credentials.SkipTLSVerify = true
-	}
+	mc.Credentials.SkipTLSVerify = u.Cfg.SkipTLSVerify
+
 	mc.SetLogLevel(LogLevel)
 	logger.Infof("login as %s (team: %s) on %s", u.Credentials.Login, u.Credentials.Team, u.Credentials.Server)
 	err := mc.Login()
