@@ -142,7 +142,7 @@ func login(u *User, toUser *User, args []string, service string) {
 	u.MsgUser(toUser, "login OK")
 	// set nick to mattermost nickname or username if nick empty
 	if u.mc.User.Nickname != "" {
-		if !u.Srv.RenameUser(u, u.mc.User.Nickname) {
+		if !u.Srv.RenameUser(u, strings.Replace(u.mc.User.Nickname, " ", "", -1)) {
 			u.Srv.RenameUser(u, u.mc.User.Username)
 		}
 	} else {
