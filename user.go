@@ -138,7 +138,17 @@ func (user *User) Decode() (*irc.Message, error) {
 	}
 	msg, err := user.Conn.Decode()
 	if err == nil && msg != nil {
-		logger.Debugf("<- %s", msg)
+		if msg.Command == "PRIVMSG" && msg.Params != nil && (msg.Params[0] == "slack" || msg.Params[0] == "mattermost"){
+			// Don't log sensitive information
+			trail := strings.Split(msg.Trailing, " ")
+			if (msg.Trailing != "" && trail[0] == "login") || (len(msg.Params) > 1 && msg.Params[1] == "login") {
+				logger.Debugf("<- PRIVMSG %s :login [redacted]", msg.Params[0])
+			} else {
+				logger.Debugf("<- %s", msg)
+			}
+		} else {
+			logger.Debugf("<- %s", msg)
+		}
 	}
 	return msg, err
 }
