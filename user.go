@@ -1,6 +1,7 @@
 package irckit
 
 import (
+	"fmt"
 	"net"
 	"strings"
 	"sync"
