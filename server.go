@@ -456,7 +456,6 @@ func (s *server) handshake(u *User) error {
 				service = "slack"
 			}
 			login(u, u, u.Pass, service)
-			return nil
 		}
 		return err
 	}
