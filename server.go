@@ -450,7 +450,7 @@ func (s *server) handshake(u *User) error {
 		s.u = u
 
 		err = s.welcome(u)
-		if err == nil {
+		if err == nil && u.Pass != nil {
 			service := "mattermost"
 			if len(u.Pass) == 1 {
 				service = "slack"
