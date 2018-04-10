@@ -455,7 +455,7 @@ func (s *server) handshake(u *User) error {
 			if len(u.Pass) == 1 {
 				service = "slack"
 			}
-			login(u, u, u.Pass, service)
+			login(u, &User{Nick: service, User: service, Real: service, Host: "service", channels: map[Channel]struct{}{}}, u.Pass, service)
 		}
 		return err
 	}
