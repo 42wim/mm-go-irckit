@@ -562,7 +562,8 @@ func (u *User) syncMMChannel(id string, name string) {
 						ch.Join(u)
 					}
 				}
-				ch.Topic(u, u.mc.GetChannelHeader(id))
+				svc, _ := srv.HasUser("mattermost")
+				ch.Topic(svc, u.mc.GetChannelHeader(id))
 			}
 			break
 		}
