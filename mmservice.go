@@ -156,6 +156,7 @@ func login(u *User, toUser *User, args []string, service string) {
 func search(u *User, toUser *User, args []string, service string) {
 	if service == "slack" {
 		u.MsgUser(toUser, "not implemented")
+		return
 	}
 	postlist := u.mc.SearchPosts(strings.Join(args, " "))
 	if postlist == nil || len(postlist.Order) == 0 {
